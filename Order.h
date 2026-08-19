@@ -12,6 +12,7 @@
 #include <memory>
 #include <stdexcept>
 
+#include "Constants.h"
 #include "OrderType.h"
 #include "Side.h"
 #include "Usings.h"
@@ -35,6 +36,10 @@ public:
     , remainingQuantity_{ quantity }
     { }
 
+    Order(OrderId orderId, Side side, Quantity quantity)
+        : Order(OrderType::Market, orderId, side, Constants::InvalidPrice, quantity)
+    { }
+
     OrderId GetOrderId() const { return orderId_; }
     Side GetSide() const { return side_; }
     Price GetPrice() const { return price_; }
@@ -50,6 +55,15 @@ public:
             throw std::logic_error("Order (" + std::to_string(GetOrderId()) + ") cannot be filled for more than its remaining quantity.");
         }
         remainingQuantity_ -= quantity;
+    }
+
+    void ToGoodTillCancel(Price price) {
+        if (GetOrderType() != OrderType::Market) {
+            throw std::logic_error("Order " + std::to_string(GetOrderId()) + " cannot have its price adjusted, only market orders can.");
+        }
+        //if (!std::is_finite(price))
+        price_ = price;
+        orderType_ = OrderType::GoodTillCancel;
     }
 };
 

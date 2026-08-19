@@ -1,5 +1,9 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.30)
 project(limitOrderBook)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 add_executable(limitOrderBook main.cpp
         TradeInfo.h
         Usings.h
@@ -11,4 +15,7 @@ add_executable(limitOrderBook main.cpp
         Side.h
         LevelInfo.h
         OrderbookLevelInfos.h
-        Orderbook.cpp)
+        Orderbook.cpp
+        Constants.h)
+
+add_subdirectory(tests)
