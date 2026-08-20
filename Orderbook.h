@@ -57,6 +57,7 @@ private:
 
     void CancelOrderInternal(OrderId orderId);
 
+
     void OnOrderCancelled(OrderPointer order);
     void OnOrderAdded(OrderPointer order);
     void OnOrderMatched(Price price, Quantity quantity, bool isFullyFilled);
@@ -67,6 +68,8 @@ private:
 
 public:
     Trades AddOrder(OrderPointer order);
+    Trades ModifyOrder(OrderModify order);
+
 
     void CancelOrder(OrderId orderId);
 
